@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>台中旅遊：看風景 放輕鬆</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,23 +14,25 @@
             --terracotta: #c97941;
             --ink: #1e1a16;
             --mist: #e8e0d5;
+            --safe-top: env(safe-area-inset-top, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
+        /* 基礎設定 */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; height: 100%; }
 
         body {
             background-color: var(--cream);
             color: var(--ink);
             font-family: 'Noto Serif TC', serif;
             line-height: 1.6;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            min-height: 100%;
         }
 
-        /* 頂部視覺區 */
+        /* --- 頂部視覺區 (Hero) --- */
         .hero {
             height: 45vh;
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), 
@@ -38,6 +42,7 @@
             justify-content: center;
             color: white;
             text-align: center;
+            padding-top: var(--safe-top);
         }
 
         .hero-title {
@@ -46,7 +51,9 @@
             text-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* 導航列 */
+        .hero-subtitle { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; opacity: 0.9; letter-spacing: 2px; }
+
+        /* --- 導航列 --- */
         nav {
             position: sticky;
             top: 0;
@@ -82,6 +89,7 @@
             border-radius: 2px;
         }
 
+        /* --- 內容區塊 --- */
         main {
             flex: 1;
             padding: 40px 20px;
@@ -102,7 +110,7 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        /* 卡片設計 */
+        /* --- 卡片設計 --- */
         .item-card {
             background: white;
             border-radius: 24px;
@@ -121,6 +129,7 @@
         .card-body h3 { font-size: 1.5rem; margin-bottom: 12px; color: var(--warm-brown); font-weight: 900; }
         .card-body p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.8; }
 
+        /* --- 頁尾 --- */
         footer {
             text-align: center;
             padding: 50px 20px calc(30px + var(--safe-bottom));
@@ -130,17 +139,22 @@
             border-top: 1px solid var(--mist);
         }
 
+        /* 手機版微調 */
         @media (max-width: 480px) {
             nav { gap: 20px; }
             .hero { height: 35vh; }
             .card-img { height: 200px; }
+            .section.active { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <h1 class="hero-title">台中旅遊誌</h1>
+        <div>
+            <h1 class="hero-title">台中旅遊誌</h1>
+            <p class="hero-subtitle">Scenery & Relaxation</p>
+        </div>
     </section>
 
     <nav id="navbar">
@@ -183,14 +197,18 @@
 
     <script>
         function switchTab(id, el) {
+            // 切換區塊顯示
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(id);
             if(target) target.classList.add('active');
             
+            // 切換連結樣式
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             el.classList.add('active');
 
-            window.scrollTo({ top: document.querySelector('.hero').offsetHeight - 50, behavior: 'smooth' });
+            // 自動捲動至導航列下方，方便手機查看
+            const navPos = document.getElementById('navbar').offsetTop;
+            window.scrollTo({ top: navPos - 10, behavior: 'smooth' });
         }
     </script>
 </body>
