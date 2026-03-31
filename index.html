@@ -15,7 +15,6 @@
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
-        /* 基礎設定 */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; }
 
@@ -29,7 +28,6 @@
             flex-direction: column;
         }
 
-        /* 頂部視覺區 (Hero) */
         .hero {
             height: 45vh;
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), 
@@ -47,7 +45,6 @@
             text-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* 導航列：自適應置中 */
         nav {
             position: sticky;
             top: 0;
@@ -83,7 +80,6 @@
             border-radius: 2px;
         }
 
-        /* 內容區：Grid 自適應排版 */
         main {
             flex: 1;
             padding: 40px 20px;
@@ -104,7 +100,6 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        /* 卡片設計 */
         .item-card {
             background: white;
             border-radius: 24px;
@@ -123,7 +118,6 @@
         .card-body h3 { font-size: 1.5rem; margin-bottom: 12px; color: var(--warm-brown); font-weight: 900; }
         .card-body p { font-size: 1rem; color: #555; text-align: justify; line-height: 1.8; }
 
-        /* 頁尾 */
         footer {
             text-align: center;
             padding: 50px 20px calc(30px + var(--safe-bottom));
@@ -133,7 +127,6 @@
             border-top: 1px solid var(--mist);
         }
 
-        /* 手機版微調 */
         @media (max-width: 480px) {
             nav { gap: 20px; }
             .hero { height: 35vh; }
@@ -155,12 +148,11 @@
     <main>
         <section id="food" class="section active">
             <div class="item-card">
-    <img src="https://travel.taichung.gov.tw/Utility/DisplayImage?id=25381" class="card-img" alt="台中太陽餅">
-    <div class="card-body">
-        <h3>太陽餅</h3>
-        <p>台中最經典的代表性伴手禮。純手工揉製的千層酥皮，包裹著金黃色澤、甜而不膩的麥芽內餡，每一口都是台中百年的傳統韻味。</p>
-    </div>
-
+                <img src="https://travel.taichung.gov.tw/Utility/DisplayImage?id=25381" class="card-img" alt="台中太陽餅">
+                <div class="card-body">
+                    <h3>太陽餅</h3>
+                    <p>台中最經典的代表性伴手禮。純手工揉製的千層酥皮，包裹著金黃色澤、甜而不膩的麥芽內餡，每一口都是台中百年的傳統韻味。</p>
+                </div>
             </div>
         </section>
 
@@ -188,16 +180,13 @@
 
     <script>
         function switchTab(id, el) {
-            // 切換區塊顯示
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(id);
             if(target) target.classList.add('active');
             
-            // 切換連結樣式
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             el.classList.add('active');
 
-            // 切換後自動微捲動，讓使用者知道內容已更新
             window.scrollTo({ top: document.querySelector('.hero').offsetHeight - 50, behavior: 'smooth' });
         }
     </script>
