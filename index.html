@@ -12,37 +12,37 @@
             --terracotta: #c97941;
             --ink: #1e1a16;
             --mist: #e8e0d5;
-            --safe-top: env(safe-area-inset-top, 0px);
             --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; height: 100%; }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--cream);
             color: var(--ink);
             font-family: 'Noto Serif TC', serif;
             line-height: 1.6;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100%;
         }
 
+        /* 頂部橫幅 */
         .hero {
-            height: 45vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
-                        url('https://travel.taichung.gov.tw/image/25574/1024x768') center/cover no-repeat;
+            height: 40vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), 
+                        url('https://travel.taichung.gov.tw/image/24379/1024x768') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
             color: white;
-            padding-top: var(--safe-top);
+            text-align: center;
         }
 
-        .hero-title { font-size: clamp(2.2rem, 8vw, 3.5rem); font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .hero-title { font-size: clamp(2rem, 8vw, 3rem); font-weight: 900; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
+        /* 導航列 */
         nav {
             position: sticky;
             top: 0;
@@ -50,11 +50,11 @@
             background: rgba(250, 246, 240, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--mist);
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 30px;
             padding: 15px 0;
+            border-bottom: 1px solid var(--mist);
         }
 
         .nav-link {
@@ -62,53 +62,45 @@
             color: var(--warm-brown);
             font-weight: 700;
             font-size: 1rem;
-            position: relative;
+            padding: 5px 10px;
+            transition: 0.3s;
         }
 
-        .nav-link.active { color: var(--terracotta); }
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--terracotta);
-        }
+        .nav-link.active { color: var(--terracotta); border-bottom: 2px solid var(--terracotta); }
 
-        main { flex: 1; padding: 20px; max-width: 850px; margin: 0 auto; width: 100%; }
+        /* 內容區：自適應網格 */
+        main { flex: 1; padding: 30px 20px; max-width: 1000px; margin: 0 auto; width: 100%; }
         
         .section { display: none; animation: fadeIn 0.5s ease forwards; }
         .section.active { 
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* 卡片設計 */
         .item-card {
             background: white;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid var(--mist);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
+            border: 1px solid var(--mist);
         }
 
-        .card-img { width: 100%; height: 220px; object-fit: cover; }
-        .card-body { padding: 25px; }
-        .card-body h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--warm-brown); }
-        .card-body p { font-size: 1rem; color: #555; text-align: justify; }
+        .card-img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 20px; }
+        .card-body h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--warm-brown); }
+        .card-body p { font-size: 0.95rem; color: #555; text-align: justify; }
 
         footer {
-            background: var(--ink);
-            color: rgba(255,255,255,0.4);
             text-align: center;
-            padding: 40px 20px calc(40px + var(--safe-bottom));
-            font-size: 0.85rem;
-            margin-top: 50px;
+            padding: 40px 20px calc(20px + var(--safe-bottom));
+            font-size: 0.8rem;
+            color: #999;
         }
     </style>
 </head>
@@ -118,7 +110,7 @@
         <h1 class="hero-title">台中旅遊誌</h1>
     </section>
 
-    <nav id="navbar">
+    <nav>
         <a href="javascript:void(0)" class="nav-link active" onclick="switchTab('food', this)">在地美食</a>
         <a href="javascript:void(0)" class="nav-link" onclick="switchTab('landmarks', this)">地標建築</a>
     </nav>
@@ -129,32 +121,30 @@
                 <img src="https://utility.displayimage.taichung.gov.tw/Utility/DisplayImage?id=25381" class="card-img" alt="太陽餅">
                 <div class="card-body">
                     <h3>太陽餅</h3>
-                    <p>台中最經典的代表性伴手禮。純手工揉製的千層酥皮，包裹著甜而不膩的麥芽糖內餡，每一口都能感受到傳統工藝的溫潤口感。</p>
+                    <p>台中經典代名詞。千層酥脆的外皮與溫潤麥芽內餡，每一口都是傳承百年的道地好滋味。</p>
                 </div>
             </div>
         </section>
 
         <section id="landmarks" class="section">
             <div class="item-card">
-                <img src="https://travel.taichung.gov.tw/image/24379/1024x768" class="card-img" alt="國家歌劇院">
+                <img src="https://travel.taichung.gov.tw/image/24379/1024x768" class="card-img" alt="歌劇院">
                 <div class="card-body">
-                    <h3>台中國家歌劇院</h3>
-                    <p>世界建築奇蹟。由普立茲克獎大師伊東豊雄設計，獨特的無樑柱曲牆構造，是台中最具代表性的現代藝文地標。</p>
+                    <h3>國家歌劇院</h3>
+                    <p>由大師伊東豊雄設計，獨特的無樑柱曲牆結構，是台中最具辨識度的藝文殿堂。</p>
                 </div>
             </div>
             <div class="item-card">
                 <img src="https://travel.taichung.gov.tw/Utility/DisplayImage?id=25574" class="card-img" alt="高美濕地">
                 <div class="card-body">
                     <h3>高美濕地</h3>
-                    <p>被譽為一生必遊一次的聖地。絕美的夕陽倒映在濕地上形成的「天空之鏡」，是台中最浪漫且令人屏息的自然景緻。</p>
+                    <p>世界級絕美落日，結合豐富生態與木棧道地景，是放鬆心靈的絕佳去處。</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>© 2026 台中旅遊誌 · 看風景 放輕鬆</p>
-    </footer>
+    <footer>© 2026 台中旅遊誌 · 看風景 放輕鬆</footer>
 
     <script>
         function switchTab(id, el) {
