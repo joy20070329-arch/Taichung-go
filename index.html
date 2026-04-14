@@ -1,809 +1,725 @@
 <!DOCTYPE html>
 
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>台中東海商圈美食導覽</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink: #1a0a00;
-      --cream: #fdf6ec;
-      --warm: #f5e6cc;
-      --amber: #c8861a;
-      --rust: #a84b1f;
-      --sage: #6b7c5a;
-      --pale-sage: #e8ede2;
-      --border: rgba(200,134,26,0.25);
+      --red:    #c0392b;
+      --gold:   #d4a847;
+      --dark:   #1a1208;
+      --cream:  #fdf6e3;
+      --warm:   #f5ede0;
+      --shadow: rgba(26,18,8,.18);
     }
 
 ```
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: auto; }
 
 body {
-  background: var(--cream);
-  color: var(--ink);
   font-family: 'Noto Sans TC', sans-serif;
-  font-weight: 300;
-  line-height: 1.8;
+  background: var(--cream);
+  color: var(--dark);
   overflow-x: hidden;
 }
 
 /* ── HEADER ── */
 header {
-  position: relative;
-  background: var(--ink);
-  color: var(--cream);
-  padding: 0;
-  overflow: hidden;
+  background: var(--dark);
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 64px;
+  box-shadow: 0 2px 16px var(--shadow);
 }
 
-.header-pattern {
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(200,134,26,0.06) 20px, rgba(200,134,26,0.06) 21px),
-    repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(200,134,26,0.06) 20px, rgba(200,134,26,0.06) 21px);
-}
-
-.header-inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  padding: 28px 48px;
-  border-bottom: 1px solid rgba(200,134,26,0.3);
-}
-
-.site-badge {
+.site-logo {
   font-family: 'Noto Serif TC', serif;
-  font-size: 11px;
-  letter-spacing: 0.25em;
-  color: var(--amber);
-  text-transform: uppercase;
-}
-
-.site-title {
-  text-align: center;
-}
-
-.site-title h1 {
-  font-family: 'Noto Serif TC', serif;
-  font-size: clamp(22px, 3vw, 36px);
   font-weight: 900;
-  letter-spacing: 0.12em;
-  line-height: 1.2;
-  background: linear-gradient(135deg, #f5d78e, #c8861a, #e8b96a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 1.25rem;
+  color: var(--gold);
+  letter-spacing: .05em;
+  white-space: nowrap;
 }
-
-.site-title .sub {
-  font-size: 11px;
-  letter-spacing: 0.3em;
-  color: rgba(245,230,204,0.5);
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  margin-top: 4px;
-}
-
-.header-contact {
-  text-align: right;
-  font-size: 11px;
-  color: rgba(245,230,204,0.5);
-  letter-spacing: 0.05em;
-}
-
-.header-contact a {
-  color: var(--amber);
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-.header-contact a:hover { opacity: 0.7; }
 
 /* ── NAV ── */
-nav {
-  background: var(--ink);
-  border-bottom: 2px solid var(--amber);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+nav { display: flex; gap: 0; }
+
+nav button {
+  background: none; border: none; cursor: pointer;
+  color: #e8dcc8;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: .875rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  padding: 0 1.1rem;
+  height: 64px;
+  display: flex; align-items: center;
+  border-bottom: 3px solid transparent;
+  transition: color .25s, border-color .25s, background .25s;
 }
 
-nav ul {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  gap: 0;
+nav button:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  background: rgba(212,168,71,.07);
 }
 
-nav ul li a {
-  display: block;
-  padding: 16px 32px;
-  color: var(--cream);
-  text-decoration: none;
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  font-family: 'Noto Serif TC', serif;
-  font-weight: 600;
+nav button.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ── HERO ── */
+#hero {
   position: relative;
-  transition: color 0.3s;
-}
-
-nav ul li a::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 50%; right: 50%;
-  height: 2px;
-  background: var(--amber);
-  transition: left 0.3s, right 0.3s;
-}
-
-nav ul li a:hover {
-  color: var(--amber);
-}
-
-nav ul li a:hover::after {
-  left: 12px;
-  right: 12px;
-}
-
-/* ── HERO (首頁) ── */
-#home {
-  position: relative;
-  min-height: 88vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: var(--ink);
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 30% 50%, rgba(200,134,26,0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(168,75,31,0.12) 0%, transparent 60%),
-    var(--ink);
-}
-
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(200,134,26,0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200,134,26,0.07) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
+  min-height: 520px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
   text-align: center;
-  padding: 60px 40px;
-  max-width: 760px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #2c1a08 0%, #1a1208 60%, #3b1f0a 100%);
+  padding: 6rem 1.5rem 4rem;
 }
 
-.hero-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.4em;
-  color: var(--amber);
-  margin-bottom: 28px;
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 70% 30%, rgba(212,168,71,.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 70%, rgba(192,57,43,.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* decorative grid lines */
+#hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(212,168,71,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,168,71,.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: .7rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  padding: .35rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
   opacity: 0;
-  animation: fadeUp 0.8s ease 0.2s forwards;
+  animation: fadeUp .6s .1s forwards;
 }
 
-.hero-headline {
+#hero h1 {
   font-family: 'Noto Serif TC', serif;
-  font-size: clamp(36px, 6vw, 72px);
   font-weight: 900;
-  color: var(--cream);
-  line-height: 1.15;
-  letter-spacing: 0.05em;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #fff;
+  line-height: 1.2;
   opacity: 0;
-  animation: fadeUp 0.8s ease 0.4s forwards;
+  animation: fadeUp .7s .25s forwards;
 }
 
-.hero-headline span {
-  color: var(--amber);
-}
+#hero h1 span { color: var(--gold); }
 
-.hero-divider {
-  width: 60px;
-  height: 1px;
-  background: var(--amber);
-  margin: 32px auto;
+.hero-sub {
+  margin-top: 1rem;
+  color: #c8b89a;
+  font-size: 1rem;
+  max-width: 500px;
+  line-height: 1.7;
   opacity: 0;
-  animation: fadeUp 0.8s ease 0.6s forwards;
-}
-
-.hero-desc {
-  font-size: 15px;
-  color: rgba(245,230,204,0.65);
-  line-height: 2;
-  letter-spacing: 0.06em;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.8s forwards;
+  animation: fadeUp .7s .4s forwards;
 }
 
 .hero-cta {
-  margin-top: 44px;
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
+  margin-top: 2rem;
+  display: inline-block;
+  background: var(--gold);
+  color: var(--dark);
+  font-weight: 700;
+  font-size: .875rem;
+  letter-spacing: .08em;
+  padding: .75rem 2rem;
+  border-radius: 3px;
+  text-decoration: none;
+  transition: background .2s, transform .2s;
   opacity: 0;
-  animation: fadeUp 0.8s ease 1s forwards;
+  animation: fadeUp .7s .55s forwards;
 }
 
-.btn-primary {
-  padding: 14px 36px;
-  background: var(--amber);
-  color: var(--ink);
-  font-family: 'Noto Serif TC', serif;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-}
+.hero-cta:hover { background: #e6bb55; transform: translateY(-2px); }
 
-.btn-primary:hover {
-  background: #e09d2a;
-  transform: translateY(-2px);
-}
-
-.btn-outline {
-  padding: 14px 36px;
-  background: transparent;
-  color: var(--cream);
-  font-family: 'Noto Serif TC', serif;
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-decoration: none;
-  border: 1px solid rgba(245,230,204,0.3);
-  transition: border-color 0.3s, color 0.3s, transform 0.2s;
-}
-
-.btn-outline:hover {
-  border-color: var(--amber);
-  color: var(--amber);
-  transform: translateY(-2px);
-}
-
-/* ── 最新消息 ── */
-.news-bar {
-  background: var(--amber);
-  padding: 14px 48px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  overflow: hidden;
-}
-
-.news-label {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--ink);
-  white-space: nowrap;
-  background: var(--ink);
-  color: var(--amber);
-  padding: 4px 12px;
-}
-
-.news-items {
-  display: flex;
-  gap: 48px;
-  animation: ticker 20s linear infinite;
-  white-space: nowrap;
-}
-
-.news-item {
-  font-size: 13px;
-  color: var(--ink);
-  letter-spacing: 0.05em;
-}
-
-.news-item .date {
-  font-weight: 700;
-  margin-right: 10px;
-}
-
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── SECTION COMMON ── */
-section {
-  padding: 96px 48px;
-}
+section { padding: 5rem 1.5rem; }
 
-.section-header {
-  text-align: center;
-  margin-bottom: 64px;
-}
+.section-inner { max-width: 1080px; margin: 0 auto; }
 
-.section-kicker {
-  font-size: 10px;
-  letter-spacing: 0.4em;
-  color: var(--amber);
-  margin-bottom: 16px;
-  display: block;
+.section-label {
+  font-size: .7rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: .6rem;
 }
 
 .section-title {
   font-family: 'Noto Serif TC', serif;
-  font-size: clamp(26px, 3.5vw, 40px);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-weight: 900;
-  color: var(--ink);
-  letter-spacing: 0.08em;
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
 
-.section-rule {
-  width: 48px;
-  height: 2px;
-  background: var(--amber);
-  margin: 20px auto 0;
+.section-desc {
+  color: #5a4a36;
+  line-height: 1.9;
+  max-width: 640px;
+  font-size: .95rem;
 }
 
-/* ── 必吃美食 ── */
-#food {
-  background: var(--cream);
+.divider {
+  width: 48px; height: 3px;
+  background: var(--gold);
+  margin: 1.2rem 0 2rem;
 }
+
+/* ── NEWS ── */
+#news { background: var(--warm); }
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.news-card {
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px var(--shadow);
+  transition: transform .25s, box-shadow .25s;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 28px rgba(26,18,8,.16);
+}
+
+.news-thumb {
+  height: 180px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+}
+
+.news-thumb.t1 { background: linear-gradient(135deg,#f9e4c8,#f5d0a0); }
+.news-thumb.t2 { background: linear-gradient(135deg,#fce4e4,#f7bfbf); }
+
+.news-body { padding: 1.25rem 1.5rem 1.5rem; }
+
+.news-date {
+  font-size: .72rem;
+  color: var(--red);
+  letter-spacing: .1em;
+  font-weight: 600;
+  margin-bottom: .4rem;
+}
+
+.news-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: .5rem;
+}
+
+.news-card p { font-size: .85rem; color: #6b5640; line-height: 1.7; }
+
+/* ── FOOD ── */
+#food { background: var(--cream); }
 
 .food-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2px;
-  max-width: 1100px;
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2.5rem;
 }
 
 .food-card {
-  background: var(--warm);
-  padding: 40px 32px;
-  border-top: 3px solid transparent;
-  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+  background: #fff;
+  border: 1px solid #e8dcc8;
+  border-radius: 6px;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
   cursor: default;
 }
 
 .food-card:hover {
-  border-color: var(--amber);
-  background: #fcefd8;
+  border-color: var(--gold);
+  box-shadow: 0 6px 20px var(--shadow);
   transform: translateY(-4px);
 }
 
-.food-icon {
-  font-size: 40px;
-  margin-bottom: 20px;
-  display: block;
-}
+.food-icon { font-size: 2.8rem; margin-bottom: .75rem; }
 
-.food-name {
+.food-card h3 {
   font-family: 'Noto Serif TC', serif;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--ink);
-  letter-spacing: 0.08em;
-  margin-bottom: 10px;
+  margin-bottom: .4rem;
 }
 
-.food-desc {
-  font-size: 13px;
-  color: #5a4030;
-  line-height: 1.9;
-}
+.food-card p { font-size: .8rem; color: #7a6048; line-height: 1.6; }
 
 .food-tag {
   display: inline-block;
-  margin-top: 16px;
-  padding: 3px 12px;
-  background: var(--amber);
-  color: var(--cream);
-  font-size: 10px;
-  letter-spacing: 0.15em;
-}
-
-/* ── 交通資訊 ── */
-#transport {
-  background: var(--ink);
-  color: var(--cream);
-}
-
-#transport .section-title {
-  color: var(--cream);
-}
-
-.transport-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.transport-card {
-  border: 1px solid rgba(200,134,26,0.25);
-  padding: 36px 28px;
-  transition: border-color 0.3s, background 0.3s;
-}
-
-.transport-card:hover {
-  border-color: var(--amber);
-  background: rgba(200,134,26,0.07);
-}
-
-.transport-icon {
-  font-size: 32px;
-  margin-bottom: 16px;
-  display: block;
-}
-
-.transport-method {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 16px;
+  margin-top: .7rem;
+  background: #fdf0dc;
+  color: var(--red);
+  font-size: .68rem;
   font-weight: 700;
-  color: var(--amber);
-  letter-spacing: 0.1em;
-  margin-bottom: 12px;
+  letter-spacing: .1em;
+  padding: .2rem .6rem;
+  border-radius: 2px;
 }
 
-.transport-detail {
-  font-size: 13px;
-  color: rgba(245,230,204,0.65);
-  line-height: 1.9;
-}
+/* ── TRAFFIC ── */
+#traffic { background: var(--dark); color: var(--cream); }
 
-/* ── 聯絡我們 ── */
-#contact {
-  background: var(--pale-sage);
-}
+#traffic .section-title { color: #fff; }
+#traffic .section-desc  { color: #c8b89a; }
 
-.contact-wrap {
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.contact-grid {
+.traffic-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  margin-bottom: 48px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
 }
 
-.contact-item {
-  padding: 28px 24px;
-  background: white;
-  border-left: 3px solid var(--sage);
+.traffic-item {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,168,71,.2);
+  border-radius: 6px;
+  padding: 1.75rem 1.5rem;
+  transition: background .2s, border-color .2s;
 }
 
-.contact-label {
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  color: var(--sage);
-  margin-bottom: 10px;
+.traffic-item:hover {
+  background: rgba(212,168,71,.08);
+  border-color: var(--gold);
 }
 
-.contact-value {
+.traffic-icon { font-size: 2rem; margin-bottom: .75rem; }
+
+.traffic-item h3 {
   font-family: 'Noto Serif TC', serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
+  color: var(--gold);
+  font-size: 1rem;
+  margin-bottom: .5rem;
 }
 
-.contact-value a {
-  color: var(--rust);
+.traffic-item p { font-size: .82rem; color: #b0a090; line-height: 1.7; }
+
+/* ── CONTACT ── */
+#contact { background: var(--warm); }
+
+.contact-box {
+  max-width: 560px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 2.5rem 2.5rem;
+  box-shadow: 0 4px 20px var(--shadow);
+  margin-top: 2.5rem;
+}
+
+.contact-row {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f0e8d8;
+}
+
+.contact-row:last-child { border-bottom: none; }
+
+.contact-ico { font-size: 1.4rem; flex-shrink: 0; margin-top: .1rem; }
+
+.contact-info h4 {
+  font-weight: 700;
+  font-size: .85rem;
+  letter-spacing: .06em;
+  margin-bottom: .25rem;
+}
+
+.contact-info p, .contact-info a {
+  font-size: .85rem; color: #6b5640; line-height: 1.6;
   text-decoration: none;
 }
 
-.contact-value a:hover {
-  text-decoration: underline;
-}
-
-.contact-form-note {
-  text-align: center;
-  font-size: 13px;
-  color: #5a6650;
-  padding: 28px;
-  border: 1px dashed rgba(107,124,90,0.4);
-  letter-spacing: 0.05em;
-}
+.contact-info a:hover { color: var(--red); }
 
 /* ── FOOTER ── */
+/* ── FOOTER ── */
 footer {
-  background: #0e0500;
-  color: rgba(245,230,204,0.45);
-  padding: 40px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  border-top: 1px solid rgba(200,134,26,0.2);
+  background: #110d06;
+  color: #7a6a52;
 }
 
-.footer-brand {
+.footer-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 4rem 2rem 2.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+}
+
+.footer-logo {
   font-family: 'Noto Serif TC', serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--amber);
-  letter-spacing: 0.1em;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: .75rem;
+  letter-spacing: .06em;
 }
 
-.footer-copy {
-  font-size: 12px;
-  letter-spacing: 0.08em;
+.footer-tagline {
+  font-size: .82rem;
+  color: #6a5a44;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
 }
 
-.footer-email {
-  font-size: 12px;
-  letter-spacing: 0.08em;
-}
-
-.footer-email a {
-  color: var(--amber);
+.footer-socials { display: flex; gap: .75rem; }
+.footer-socials a {
+  font-size: 1.3rem;
   text-decoration: none;
+  transition: transform .2s;
+  display: inline-block;
+}
+.footer-socials a:hover { transform: translateY(-3px); }
+
+.footer-col h4 {
+  font-family: 'Noto Serif TC', serif;
+  color: var(--gold);
+  font-size: .85rem;
+  letter-spacing: .1em;
+  margin-bottom: 1rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid rgba(212,168,71,.2);
 }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
+.footer-col ul li { font-size: .82rem; color: #6a5a44; line-height: 1.6; }
+
+.footer-col ul button {
+  background: none; border: none; cursor: pointer;
+  color: #7a6a52;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: .82rem;
+  padding: 0;
+  transition: color .2s;
+}
+.footer-col ul button:hover { color: var(--gold); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.06);
+  text-align: center;
+  padding: 1.5rem 2rem;
+  font-size: .75rem;
+  letter-spacing: .06em;
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
+.footer-bottom span { color: var(--gold); }
+.footer-sub { margin-top: .4rem; color: #4a3d2d; font-size: .7rem; }
 
-.reveal.visible {
-  opacity: 1;
-  transform: none;
+@media (max-width: 680px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem 2rem; }
 }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .header-inner { grid-template-columns: 1fr; text-align: center; gap: 12px; }
-  .header-contact { text-align: center; }
-  nav ul { flex-wrap: wrap; }
-  nav ul li a { padding: 12px 18px; font-size: 12px; }
-  section { padding: 64px 24px; }
-  .news-bar { padding: 12px 24px; }
-  footer { flex-direction: column; text-align: center; }
-  .contact-grid { grid-template-columns: 1fr; }
+/* ── BACK TO TOP ── */
+#backTop {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 48px; height: 48px;
+  background: var(--gold);
+  color: var(--dark);
+  border: none; border-radius: 50%;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(26,18,8,.3);
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s, transform .3s;
+  z-index: 200;
 }
+#backTop.visible { opacity: 1; pointer-events: auto; }
+#backTop:hover { transform: translateY(-3px); background: #e6bb55; }
 ```
 
   </style>
 </head>
 <body>
 
-<!-- ════ HEADER ════ -->
+<!-- ══ HEADER ══ -->
 
 <header>
-  <div class="header-pattern"></div>
-  <div class="header-inner">
-    <div class="site-badge">Taichung · Donghai District</div>
-    <div class="site-title">
-      <h1>台中東海商圈美食導覽</h1>
-      <p class="sub">A Culinary Journey Through Donghai</p>
-    </div>
-    <div class="header-contact">
-      <span style="color:var(--amber)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b9ddd6d7ded1d8d097dfd6d6ddf9dcc1d8d4c9d5dc97dad6d4">[email&#160;protected]</a></span>
-    </div>
-  </div>
+  <div class="site-logo">東海商圈</div>
+  <nav>
+    <button onclick="goTo('hero')">頁首</button>
+    <button onclick="goTo('food')">必吃美食</button>
+    <button onclick="goTo('traffic')">交通資訊</button>
+    <button onclick="goTo('contact')">聯絡我們</button>
+  </nav>
 </header>
 
-<!-- ════ NAV ════ -->
+<!-- ══ HERO ══ -->
 
-<nav>
-  <ul>
-    <li><a href="javascript:void(0)" onclick="scrollToSection('home')">頁首</a></li>
-    <li><a href="javascript:void(0)" onclick="scrollToSection('food')">必吃美食</a></li>
-    <li><a href="javascript:void(0)" onclick="scrollToSection('transport')">交通資訊</a></li>
-    <li><a href="javascript:void(0)" onclick="scrollToSection('contact')">聯絡我們</a></li>
-  </ul>
-</nav>
+<section id="hero">
+  <div class="hero-badge">Taichung · Donghai District</div>
+  <h1>台中<span>東海商圈</span><br>美食導覽</h1>
+  <p class="hero-sub">探索台中最具人氣的學區商圈，從傳統小吃到文青咖啡，每一口都是東海獨特的味道。</p>
+  <button class="hero-cta" onclick="goTo('food')">探索美食 →</button>
+</section>
 
-<!-- ════ HERO ════ -->
+<!-- ══ NEWS ══ -->
 
-<section id="home" style="padding:0;">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">TAICHUNG · DONGHAI COMMERCIAL DISTRICT</p>
-    <h2 class="hero-headline">探索<span>東海</span>商圈<br>美食新天地</h2>
-    <div class="hero-divider"></div>
-    <p class="hero-desc">
-      台中東海商圈匯聚各式在地美味，<br>
-      從特色小吃到精緻餐廳，帶您一次品嚐道地台灣風味。
-    </p>
-    <div class="hero-cta">
-      <a href="javascript:void(0)" onclick="scrollToSection('food')" class="btn-primary">探索美食</a>
-      <a href="javascript:void(0)" onclick="scrollToSection('transport')" class="btn-outline">交通指南</a>
+<section id="news">
+  <div class="section-inner">
+    <p class="section-label">Latest News</p>
+    <h2 class="section-title">最新消息</h2>
+    <div class="divider"></div>
+    <p class="section-desc">掌握東海商圈的最新活動與店家資訊，讓您的每次造訪都充滿驚喜。</p>
+
+```
+<div class="news-grid">
+  <article class="news-card">
+    <div class="news-thumb t1">🎉</div>
+    <div class="news-body">
+      <p class="news-date">2026 / 04 / 10</p>
+      <h3>東海夜市美食節即將登場</h3>
+      <p>本月底將舉辦年度美食節，超過 50 家攤販齊聚，邀請民眾一同品嚐道地風味，活動免費入場。</p>
     </div>
+  </article>
+  <article class="news-card">
+    <div class="news-thumb t2">🏪</div>
+    <div class="news-body">
+      <p class="news-date">2026 / 03 / 28</p>
+      <h3>新店家進駐！日式拉麵館正式開幕</h3>
+      <p>人氣日式拉麵品牌正式落腳東海商圈，開幕首週享八折優惠，歡迎饕客前往品嚐道地湯頭。</p>
+    </div>
+  </article>
+</div>
+```
+
   </div>
 </section>
 
-<!-- ════ NEWS TICKER ════ -->
-
-<div class="news-bar">
-  <span class="news-label">最新消息</span>
-  <div style="overflow:hidden; flex:1;">
-    <div class="news-items">
-      <span class="news-item"><span class="date">2026.04</span>東海夜市春季限定美食祭正式開幕，精選 20 攤特色小吃！</span>
-      <span class="news-item"><span class="date">2026.03</span>東海商圈停車場擴建完工，假日停車更便利，新增 200 個車位。</span>
-      <span class="news-item"><span class="date">2026.04</span>東海夜市春季限定美食祭正式開幕，精選 20 攤特色小吃！</span>
-      <span class="news-item"><span class="date">2026.03</span>東海商圈停車場擴建完工，假日停車更便利，新增 200 個車位。</span>
-    </div>
-  </div>
-</div>
-
-<!-- ════ 必吃美食 ════ -->
+<!-- ══ FOOD ══ -->
 
 <section id="food">
-  <div class="section-header reveal">
-    <span class="section-kicker">MUST-EAT DISHES</span>
-    <h2 class="section-title">東海必吃美食</h2>
-    <div class="section-rule"></div>
-  </div>
-
-  <div class="food-grid">
-    <div class="food-card reveal">
-      <span class="food-icon">🍗</span>
-      <div class="food-name">東海雞排</div>
-      <p class="food-desc">東海商圈最具代表性的在地美食，外皮酥脆、肉質鮮嫩多汁，每日現點現炸，醬料獨門秘製。</p>
-      <span class="food-tag">人氣必點</span>
-    </div>
-    <div class="food-card reveal">
-      <span class="food-icon">🧋</span>
-      <div class="food-name">珍珠奶茶</div>
-      <p class="food-desc">台灣國民飲品，在東海商圈有多家知名茶飲店，手工珍珠 Q 彈有嚼勁，茶香清爽回甘。</p>
-      <span class="food-tag">台灣之光</span>
-    </div>
-    <div class="food-card reveal">
-      <span class="food-icon">🍢</span>
-      <div class="food-name">滷味小攤</div>
-      <p class="food-desc">深夜限定美味，多種食材任選，熬煮數小時的滷汁入味深層，是在地學生最愛的宵夜選擇。</p>
-      <span class="food-tag">深夜必備</span>
-    </div>
-    <div class="food-card reveal">
-      <span class="food-icon">🥟</span>
-      <div class="food-name">水煎包</div>
-      <p class="food-desc">現煎現賣，底部金黃酥脆，內餡飽滿鮮美，每天新鮮製作，早市限定，晚去就賣完了！</p>
-      <span class="food-tag">早市限定</span>
-    </div>
-    <div class="food-card reveal">
-      <span class="food-icon">🍜</span>
-      <div class="food-name">牛肉麵</div>
-      <p class="food-desc">精燉數小時的紅燒湯頭，濃郁醇厚，搭配手工粗麵條，牛肉軟嫩入味，是東海人心中的家鄉味。</p>
-      <span class="food-tag">招牌主食</span>
-    </div>
-    <div class="food-card reveal">
-      <span class="food-icon">🍡</span>
-      <div class="food-name">麻糬甜點</div>
-      <p class="food-desc">日式和風口感結合台灣在地食材，多種口味任選，外皮柔軟 Q 彈，餡料甜而不膩，老少咸宜。</p>
-      <span class="food-tag">甜點首選</span>
-    </div>
-  </div>
-</section>
-
-<!-- ════ 交通資訊 ════ -->
-
-<section id="transport">
-  <div class="section-header reveal">
-    <span class="section-kicker">HOW TO GET HERE</span>
-    <h2 class="section-title">交通資訊</h2>
-    <div class="section-rule"></div>
-  </div>
-
-  <div class="transport-grid">
-    <div class="transport-card reveal">
-      <span class="transport-icon">🚗</span>
-      <div class="transport-method">自行開車</div>
-      <p class="transport-detail">國道一號接台74快速道路，於大肚交流道下，沿中清路往南，接龍井路即可抵達東海商圈。</p>
-    </div>
-    <div class="transport-card reveal">
-      <span class="transport-icon">🚌</span>
-      <div class="transport-method">搭乘公車</div>
-      <p class="transport-detail">搭乘台中公車71路或88快捷，於「東海大學」站下車，步行約5分鐘即達商圈核心地帶。</p>
-    </div>
-    <div class="transport-card reveal">
-      <span class="transport-icon">🚇</span>
-      <div class="transport-method">捷運轉乘</div>
-      <p class="transport-detail">搭台中捷運至「文心森林公園站」，轉乘公車或計程車，約20分鐘可抵達東海商圈。</p>
-    </div>
-    <div class="transport-card reveal">
-      <span class="transport-icon">🅿️</span>
-      <div class="transport-method">停車資訊</div>
-      <p class="transport-detail">商圈內設有多處停車場，建議前往「東海藝術街停車場」，假日容量充足，步行即達各餐廳。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ════ 聯絡我們 ════ -->
-
-<section id="contact">
-  <div class="section-header reveal">
-    <span class="section-kicker">GET IN TOUCH</span>
-    <h2 class="section-title">聯絡我們</h2>
-    <div class="section-rule"></div>
-  </div>
-
-  <div class="contact-wrap">
-    <div class="contact-grid reveal">
-      <div class="contact-item">
-        <div class="contact-label">ADDRESS · 地址</div>
-        <div class="contact-value">台中市龍井區<br>東海藝術街</div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-label">HOURS · 營業時間</div>
-        <div class="contact-value">週一至週五<br>10:00 – 22:00</div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-label">EMAIL · 電子郵件</div>
-        <div class="contact-value">
-          <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="244d4a424b64404b4a434c454d09424b4b400a5053">[email&#160;protected]</a>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-label">PHONE · 聯絡電話</div>
-        <div class="contact-value">04-2265-XXXX</div>
-      </div>
-    </div>
+  <div class="section-inner">
+    <p class="section-label">Must Try</p>
+    <h2 class="section-title">必吃美食</h2>
+    <div class="divider"></div>
+    <p class="section-desc">東海商圈匯聚各式風味料理，以下精選推薦店家，帶您一網打盡在地人氣美食。</p>
 
 ```
-<div class="contact-form-note reveal">
-  📮 如有合作洽詢或活動邀請，歡迎來信，我們將於兩個工作天內回覆。
+<div class="food-grid">
+  <div class="food-card">
+    <div class="food-icon">🧆</div>
+    <h3>東海炸雞排</h3>
+    <p>酥脆外皮、多汁肉質，是東海商圈最具代表性的街頭小吃。</p>
+    <span class="food-tag">人氣 No.1</span>
+  </div>
+  <div class="food-card">
+    <div class="food-icon">🍜</div>
+    <h3>在地牛肉麵</h3>
+    <p>以台灣本土牛熬製的濃醇湯底，搭配手工麵條，暖心又暖胃。</p>
+    <span class="food-tag">必吃推薦</span>
+  </div>
+  <div class="food-card">
+    <div class="food-icon">🧋</div>
+    <h3>珍珠奶茶</h3>
+    <p>東海商圈的發源地之一，喝一杯最正宗的泡泡奶茶，感受台灣茶飲文化。</p>
+    <span class="food-tag">發源地</span>
+  </div>
+  <div class="food-card">
+    <div class="food-icon">☕</div>
+    <h3>文青咖啡廳</h3>
+    <p>多間獨立咖啡館，提供精品單品豆與手沖服務，適合靜靜享受午後時光。</p>
+    <span class="food-tag">打卡熱點</span>
+  </div>
+  <div class="food-card">
+    <div class="food-icon">🍱</div>
+    <h3>便當專賣店</h3>
+    <p>物美價廉的台式便當，各式滷肉、排骨、雞腿任選，是學生族的日常首選。</p>
+    <span class="food-tag">CP值超高</span>
+  </div>
+  <div class="food-card">
+    <div class="food-icon">🍡</div>
+    <h3>傳統甜品</h3>
+    <p>紅豆湯圓、仙草凍、芋圓等古早味甜品，每一口都是兒時的甜蜜記憶。</p>
+    <span class="food-tag">古早味</span>
+  </div>
 </div>
 ```
 
   </div>
 </section>
 
-<!-- ════ FOOTER ════ -->
+<!-- ══ TRAFFIC ══ -->
 
-<footer>
-  <div class="footer-brand">台中東海商圈美食導覽</div>
-  <div class="footer-email">
-    Email：<span style="color:var(--amber)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afc6c1c9c0efcbc0c1c8c7cec682c9c0c0cb81dbd8">[email&#160;protected]</a></span>
+<section id="traffic">
+  <div class="section-inner">
+    <p class="section-label" style="color:var(--gold)">How to Get Here</p>
+    <h2 class="section-title">交通資訊</h2>
+    <div class="divider"></div>
+    <p class="section-desc">無論您從台中哪個方向出發，都能輕鬆抵達東海商圈。</p>
+
+```
+<div class="traffic-grid">
+  <div class="traffic-item">
+    <div class="traffic-icon">🚗</div>
+    <h3>自行開車</h3>
+    <p>由國道一號中港交流道下，往沙鹿方向行駛，約 15 分鐘可抵達東海大學周邊商圈。</p>
   </div>
-  <div class="footer-copy">©2026 東海商圈美食導覽 · All Rights Reserved</div>
+  <div class="traffic-item">
+    <div class="traffic-icon">🚌</div>
+    <h3>公車</h3>
+    <p>搭乘台中市公車 70、106、107 號，至「東海大學」站下車，步行 3 分鐘即達商圈核心。</p>
+  </div>
+  <div class="traffic-item">
+    <div class="traffic-icon">🛵</div>
+    <h3>機車 / 腳踏車</h3>
+    <p>商圈設有機車停車格及 YouBike 站點，騎乘輕巧，穿梭巷弄更添樂趣。</p>
+  </div>
+  <div class="traffic-item">
+    <div class="traffic-icon">📍</div>
+    <h3>地址參考</h3>
+    <p>台灣台中市龍井區東海路一帶（東海大學正門周邊商圈）。</p>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Get in Touch</p>
+    <h2 class="section-title">聯絡我們</h2>
+    <div class="divider"></div>
+    <p class="section-desc">如有任何問題或合作洽詢，歡迎透過以下方式與我們聯繫。</p>
+
+```
+<div class="contact-box">
+  <div class="contact-row">
+    <span class="contact-ico">📧</span>
+    <div class="contact-info">
+      <h4>Email</h4>
+      <a href="mailto:info@donghai-food.tw">info@donghai-food.tw</a>
+    </div>
+  </div>
+  <div class="contact-row">
+    <span class="contact-ico">📞</span>
+    <div class="contact-info">
+      <h4>電話</h4>
+      <p>(04) 2631-XXXX</p>
+    </div>
+  </div>
+  <div class="contact-row">
+    <span class="contact-ico">🕐</span>
+    <div class="contact-info">
+      <h4>服務時間</h4>
+      <p>週一至週五　10:00 – 18:00<br>國定假日休息</p>
+    </div>
+  </div>
+  <div class="contact-row">
+    <span class="contact-ico">📍</span>
+    <div class="contact-info">
+      <h4>地址</h4>
+      <p>台中市龍井區東海路 × 藝術街</p>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">東海商圈</div>
+      <p class="footer-tagline">台中最具溫度的學區商圈<br>美食、文化、生活的交匯之地</p>
+      <div class="footer-socials">
+        <a href="#" title="Facebook">📘</a>
+        <a href="#" title="Instagram">📸</a>
+        <a href="#" title="Line">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>快速連結</h4>
+      <ul>
+        <li><button onclick="goTo('hero')">頁首</button></li>
+        <li><button onclick="goTo('news')">最新消息</button></li>
+        <li><button onclick="goTo('food')">必吃美食</button></li>
+        <li><button onclick="goTo('traffic')">交通資訊</button></li>
+        <li><button onclick="goTo('contact')">聯絡我們</button></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>聯絡資訊</h4>
+      <ul>
+        <li>📍 台中市龍井區東海路 × 藝術街</li>
+        <li>📞 (04) 2631-XXXX</li>
+        <li>📧 info@donghai-food.tw</li>
+        <li>🕐 週一至週五 10:00 – 18:00</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy;2026 <span>台中東海商圈美食導覽</span>．All rights reserved．</p>
+    <p class="footer-sub">本網站內容僅供參考，實際資訊請以各店家公告為準</p>
+  </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<!-- ══ BACK TO TOP ══ -->
 
-// Smooth scroll helper (avoids href=”#” triggering Open Link dialog)
-function scrollToSection(id) {
-const el = document.getElementById(id);
-if (el) el.scrollIntoView({ behavior: ‘smooth’ });
-}
+<button id="backTop" title="回到頂部" onclick="goTo('hero')">↑</button>
 
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-entries.forEach((entry, i) => {
-if (entry.isIntersecting) {
-setTimeout(() => entry.target.classList.add(‘visible’), i * 80);
-observer.unobserve(entry.target);
-}
-});
-}, { threshold: 0.12 });
+<script>
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
-document.querySelectorAll(’.reveal’).forEach(el => observer.observe(el));
+  const btn = document.getElementById('backTop');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+</script>
 
-// Nav highlight on scroll
-const 
-可以幫我將這個程式除錯嗎
+</body>
+</html>
