@@ -1,713 +1,476 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>台中東海商圈美食導覽</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>蔬式旅行 · Veggie Journey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --red:    #c0392b;
-      --gold:   #d4a847;
-      --dark:   #1a1208;
-      --cream:  #fdf6e3;
-      --warm:   #f5ede0;
-      --shadow: rgba(26,18,8,.18);
+      --green:   #2d6a4f;
+      --lime:    #74c69d;
+      --sage:    #b7e4c7;
+      --cream:   #f8f5ee;
+      --warm:    #f0ebe0;
+      --earth:   #5c4033;
+      --gold:    #c9a84c;
+      --dark:    #1a2e1f;
+      --shadow:  rgba(26,46,31,.15);
     }
 
-```
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: auto; }
-
-body {
-  font-family: 'Noto Sans TC', sans-serif;
-  background: var(--cream);
-  color: var(--dark);
-  overflow-x: hidden;
-}
-
-/* ── HEADER ── */
-header {
-  background: var(--dark);
-  position: sticky; top: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 2.5rem;
-  height: 64px;
-  box-shadow: 0 2px 16px var(--shadow);
-}
-
-.site-logo {
-  font-family: 'Noto Serif TC', serif;
-  font-weight: 900;
-  font-size: 1.25rem;
-  color: var(--gold);
-  letter-spacing: .05em;
-  white-space: nowrap;
-}
-
-/* ── NAV ── */
-nav { display: flex; gap: 0; }
-
-nav button {
-  background: none; border: none; cursor: pointer;
-  color: #e8dcc8;
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: .875rem;
-  font-weight: 500;
-  letter-spacing: .06em;
-  padding: 0 1.1rem;
-  height: 64px;
-  display: flex; align-items: center;
-  border-bottom: 3px solid transparent;
-  transition: color .25s, border-color .25s, background .25s;
-}
-
-nav button:hover {
-  color: var(--gold);
-  border-bottom-color: var(--gold);
-  background: rgba(212,168,71,.07);
-}
-
-nav button.active {
-  color: var(--gold);
-  border-bottom-color: var(--gold);
-}
-
-/* ── HERO ── */
-#hero {
-  position: relative;
-  min-height: 520px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  overflow: hidden;
-  background: linear-gradient(160deg, #2c1a08 0%, #1a1208 60%, #3b1f0a 100%);
-  padding: 6rem 1.5rem 4rem;
-}
-
-#hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 70% 30%, rgba(212,168,71,.12) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 20% 70%, rgba(192,57,43,.10) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-/* decorative grid lines */
-#hero::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(212,168,71,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212,168,71,.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-}
-
-.hero-badge {
-  display: inline-block;
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  font-size: .7rem;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  padding: .35rem 1rem;
-  border-radius: 2px;
-  margin-bottom: 1.5rem;
-  opacity: 0;
-  animation: fadeUp .6s .1s forwards;
-}
-
-#hero h1 {
-  font-family: 'Noto Serif TC', serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  color: #fff;
-  line-height: 1.2;
-  opacity: 0;
-  animation: fadeUp .7s .25s forwards;
-}
-
-#hero h1 span { color: var(--gold); }
-
-.hero-sub {
-  margin-top: 1rem;
-  color: #c8b89a;
-  font-size: 1rem;
-  max-width: 500px;
-  line-height: 1.7;
-  opacity: 0;
-  animation: fadeUp .7s .4s forwards;
-}
-
-.hero-cta {
-  margin-top: 2rem;
-  display: inline-block;
-  background: var(--gold);
-  color: var(--dark);
-  font-weight: 700;
-  font-size: .875rem;
-  letter-spacing: .08em;
-  padding: .75rem 2rem;
-  border-radius: 3px;
-  text-decoration: none;
-  transition: background .2s, transform .2s;
-  opacity: 0;
-  animation: fadeUp .7s .55s forwards;
-}
-
-.hero-cta:hover { background: #e6bb55; transform: translateY(-2px); }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── SECTION COMMON ── */
-section { padding: 5rem 1.5rem; }
-
-.section-inner { max-width: 1080px; margin: 0 auto; }
-
-.section-label {
-  font-size: .7rem;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--red);
-  font-weight: 700;
-  margin-bottom: .6rem;
-}
-
-.section-title {
-  font-family: 'Noto Serif TC', serif;
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 900;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-.section-desc {
-  color: #5a4a36;
-  line-height: 1.9;
-  max-width: 640px;
-  font-size: .95rem;
-}
-
-.divider {
-  width: 48px; height: 3px;
-  background: var(--gold);
-  margin: 1.2rem 0 2rem;
-}
-
-/* ── NEWS ── */
-#news { background: var(--warm); }
-
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2.5rem;
-}
-
-.news-card {
-  background: #fff;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px var(--shadow);
-  transition: transform .25s, box-shadow .25s;
-}
-
-.news-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 28px rgba(26,18,8,.16);
-}
-
-.news-thumb {
-  height: 180px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 3.5rem;
-}
-
-.news-thumb.t1 { background: linear-gradient(135deg,#f9e4c8,#f5d0a0); }
-.news-thumb.t2 { background: linear-gradient(135deg,#fce4e4,#f7bfbf); }
-
-.news-body { padding: 1.25rem 1.5rem 1.5rem; }
-
-.news-date {
-  font-size: .72rem;
-  color: var(--red);
-  letter-spacing: .1em;
-  font-weight: 600;
-  margin-bottom: .4rem;
-}
-
-.news-card h3 {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  line-height: 1.5;
-  margin-bottom: .5rem;
-}
-
-.news-card p { font-size: .85rem; color: #6b5640; line-height: 1.7; }
-
-/* ── FOOD ── */
-#food { background: var(--cream); }
-
-.food-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin-top: 2.5rem;
-}
-
-.food-card {
-  background: #fff;
-  border: 1px solid #e8dcc8;
-  border-radius: 6px;
-  padding: 1.5rem 1.25rem;
-  text-align: center;
-  transition: border-color .2s, box-shadow .2s, transform .2s;
-  cursor: default;
-}
-
-.food-card:hover {
-  border-color: var(--gold);
-  box-shadow: 0 6px 20px var(--shadow);
-  transform: translateY(-4px);
-}
-
-.food-icon { font-size: 2.8rem; margin-bottom: .75rem; }
-
-.food-card h3 {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: .4rem;
-}
-
-.food-card p { font-size: .8rem; color: #7a6048; line-height: 1.6; }
-
-.food-tag {
-  display: inline-block;
-  margin-top: .7rem;
-  background: #fdf0dc;
-  color: var(--red);
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  padding: .2rem .6rem;
-  border-radius: 2px;
-}
-
-/* ── TRAFFIC ── */
-#traffic { background: var(--dark); color: var(--cream); }
-
-#traffic .section-title { color: #fff; }
-#traffic .section-desc  { color: #c8b89a; }
-
-.traffic-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2.5rem;
-}
-
-.traffic-item {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(212,168,71,.2);
-  border-radius: 6px;
-  padding: 1.75rem 1.5rem;
-  transition: background .2s, border-color .2s;
-}
-
-.traffic-item:hover {
-  background: rgba(212,168,71,.08);
-  border-color: var(--gold);
-}
-
-.traffic-icon { font-size: 2rem; margin-bottom: .75rem; }
-
-.traffic-item h3 {
-  font-family: 'Noto Serif TC', serif;
-  color: var(--gold);
-  font-size: 1rem;
-  margin-bottom: .5rem;
-}
-
-.traffic-item p { font-size: .82rem; color: #b0a090; line-height: 1.7; }
-
-/* ── CONTACT ── */
-#contact { background: var(--warm); }
-
-.contact-box {
-  max-width: 560px;
-  background: #fff;
-  border-radius: 8px;
-  padding: 2.5rem 2.5rem;
-  box-shadow: 0 4px 20px var(--shadow);
-  margin-top: 2.5rem;
-}
-
-.contact-row {
-  display: flex; align-items: flex-start; gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid #f0e8d8;
-}
-
-.contact-row:last-child { border-bottom: none; }
-
-.contact-ico { font-size: 1.4rem; flex-shrink: 0; margin-top: .1rem; }
-
-.contact-info h4 {
-  font-weight: 700;
-  font-size: .85rem;
-  letter-spacing: .06em;
-  margin-bottom: .25rem;
-}
-
-.contact-info p, .contact-info a {
-  font-size: .85rem; color: #6b5640; line-height: 1.6;
-  text-decoration: none;
-}
-
-.contact-info a:hover { color: var(--red); }
-
-/* ── FOOTER ── */
-/* ── FOOTER ── */
-footer {
-  background: #110d06;
-  color: #7a6a52;
-}
-
-.footer-inner {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 4rem 2rem 2.5rem;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 3rem;
-}
-
-.footer-logo {
-  font-family: 'Noto Serif TC', serif;
-  font-weight: 900;
-  font-size: 1.5rem;
-  color: var(--gold);
-  margin-bottom: .75rem;
-  letter-spacing: .06em;
-}
-
-.footer-tagline {
-  font-size: .82rem;
-  color: #6a5a44;
-  line-height: 1.8;
-  margin-bottom: 1.25rem;
-}
-
-.footer-socials { display: flex; gap: .75rem; }
-.footer-socials a {
-  font-size: 1.3rem;
-  text-decoration: none;
-  transition: transform .2s;
-  display: inline-block;
-}
-.footer-socials a:hover { transform: translateY(-3px); }
-
-.footer-col h4 {
-  font-family: 'Noto Serif TC', serif;
-  color: var(--gold);
-  font-size: .85rem;
-  letter-spacing: .1em;
-  margin-bottom: 1rem;
-  padding-bottom: .5rem;
-  border-bottom: 1px solid rgba(212,168,71,.2);
-}
-
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
-.footer-col ul li { font-size: .82rem; color: #6a5a44; line-height: 1.6; }
-
-.footer-col ul button {
-  background: none; border: none; cursor: pointer;
-  color: #7a6a52;
-  font-family: 'Noto Sans TC', sans-serif;
-  font-size: .82rem;
-  padding: 0;
-  transition: color .2s;
-}
-.footer-col ul button:hover { color: var(--gold); }
-
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,.06);
-  text-align: center;
-  padding: 1.5rem 2rem;
-  font-size: .75rem;
-  letter-spacing: .06em;
-}
-
-.footer-bottom span { color: var(--gold); }
-.footer-sub { margin-top: .4rem; color: #4a3d2d; font-size: .7rem; }
-
-@media (max-width: 680px) {
-  .footer-inner { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem 2rem; }
-}
-/* ── BACK TO TOP ── */
-#backTop {
-  position: fixed;
-  bottom: 2rem; right: 2rem;
-  width: 48px; height: 48px;
-  background: var(--gold);
-  color: var(--dark);
-  border: none; border-radius: 50%;
-  font-size: 1.3rem;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 16px rgba(26,18,8,.3);
-  opacity: 0; pointer-events: none;
-  transition: opacity .3s, transform .3s;
-  z-index: 200;
-}
-#backTop.visible { opacity: 1; pointer-events: auto; }
-#backTop:hover { transform: translateY(-3px); background: #e6bb55; }
-```
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans TC', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--dark);
+      position: sticky; top: 0; z-index: 200;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      box-shadow: 0 2px 20px var(--shadow);
+    }
+
+    .logo {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900; font-size: 1.3rem;
+      color: var(--lime);
+      letter-spacing: .08em;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .logo-leaf { font-size: 1.5rem; }
+
+    nav { display: flex; }
+    nav button {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: .8rem; font-weight: 500;
+      color: #a8c5b0; letter-spacing: .08em;
+      padding: 0 .85rem; height: 68px;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    nav button:hover, nav button.active {
+      color: var(--lime);
+      border-bottom-color: var(--lime);
+      background: rgba(116,198,157,.06);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 580px;
+      background: linear-gradient(150deg, #0e1f13 0%, #1a2e1f 50%, #0d2218 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 7rem 1.5rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 45% at 75% 25%, rgba(116,198,157,.13) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 55% at 20% 75%, rgba(45,106,79,.18) 0%, transparent 65%);
+    }
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(116,198,157,.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--lime);
+      color: var(--lime); font-size: .68rem;
+      letter-spacing: .22em; padding: .3rem 1rem;
+      border-radius: 20px; margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .6s .1s forwards;
+    }
+    #hero h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 900; font-size: clamp(2.2rem, 5.5vw, 4rem);
+      color: #fff; line-height: 1.15;
+      opacity: 0; animation: fadeUp .7s .25s forwards;
+    }
+    #hero h1 em { color: var(--lime); font-style: normal; }
+    .hero-sub {
+      margin-top: 1.1rem; color: #8ab89a;
+      font-size: .95rem; line-height: 1.8;
+      max-width: 480px;
+      opacity: 0; animation: fadeUp .7s .4s forwards;
+    }
+    .hero-btns {
+      margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeUp .7s .55s forwards;
+    }
+    .btn-primary {
+      background: var(--lime); color: var(--dark);
+      font-weight: 700; font-size: .85rem;
+      letter-spacing: .08em; padding: .75rem 1.8rem;
+      border: none; border-radius: 3px; cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .btn-primary:hover { background: #52b788; transform: translateY(-2px); }
+    .btn-outline {
+      background: none; color: var(--lime);
+      font-weight: 600; font-size: .85rem;
+      letter-spacing: .08em; padding: .75rem 1.8rem;
+      border: 1px solid var(--lime); border-radius: 3px; cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .btn-outline:hover { background: rgba(116,198,157,.1); transform: translateY(-2px); }
+
+    .hero-stats {
+      margin-top: 3.5rem; display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeUp .7s .7s forwards;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Noto Serif TC', serif; font-size: 2rem; font-weight: 900; color: var(--lime); }
+    .stat-label { font-size: .72rem; color: #6a9a76; letter-spacing: .1em; margin-top: .2rem; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: .5rem; }
+    .section-title { font-family: 'Noto Serif TC', serif; font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 900; line-height: 1.2; margin-bottom: .8rem; }
+    .section-desc { color: #5a6e5e; line-height: 1.9; max-width: 600px; font-size: .9rem; }
+    .divider { width: 44px; height: 3px; background: var(--lime); margin: 1rem 0 2rem; border-radius: 2px; }
+
+    /* ── NEWS ── */
+    #news { background: var(--warm); }
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .news-card {
+      background: #fff; border-radius: 8px; overflow: hidden;
+      box-shadow: 0 2px 12px var(--shadow);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(26,46,31,.14); }
+    .news-thumb { height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+    .news-thumb.n1 { background: linear-gradient(135deg,#d8f3dc,#b7e4c7); }
+    .news-thumb.n2 { background: linear-gradient(135deg,#e9f5db,#cce8b0); }
+    .news-body { padding: 1.25rem 1.5rem 1.75rem; }
+    .news-date { font-size: .7rem; color: var(--green); font-weight: 700; letter-spacing: .1em; margin-bottom: .4rem; }
+    .news-card h3 { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 700; line-height: 1.5; margin-bottom: .5rem; }
+    .news-card p { font-size: .83rem; color: #6b7c6e; line-height: 1.7; }
+
+    /* ── DESTINATIONS ── */
+    #destinations { background: var(--cream); }
+    .dest-tabs { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 2rem; margin-bottom: 1.5rem; }
+    .tab-btn {
+      background: none; border: 1px solid #c8daca; color: #5a6e5e;
+      font-family: 'Noto Sans TC', sans-serif; font-size: .8rem; font-weight: 500;
+      padding: .45rem 1.1rem; border-radius: 20px; cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .tab-btn:hover, .tab-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+    .dest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; }
+    .dest-card {
+      background: #fff; border-radius: 8px; overflow: hidden;
+      border: 1px solid #e0ead2;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      cursor: pointer;
+    }
+    /* 篩選隱藏效果 */
+    .dest-card.hidden { display: none; }
+
+    .dest-card:hover { transform: translateY(-4px); border-color: var(--lime); box-shadow: 0 8px 24px var(--shadow); }
+    .dest-img { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; }
+    .dest-img.sea  { background: linear-gradient(135deg,#caf0f8,#90e0ef); }
+    .dest-img.kr   { background: linear-gradient(135deg,#ffd6e0,#ffb3c6); }
+    .dest-img.jp   { background: linear-gradient(135deg,#fde8d8,#fcc5a0); }
+    .dest-region {
+      position: absolute; top: .6rem; right: .7rem;
+      background: rgba(255,255,255,.85); color: var(--green);
+      font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+      padding: .2rem .55rem; border-radius: 10px;
+    }
+    .dest-body { padding: 1rem 1.25rem 1.25rem; }
+    .dest-card h3 { font-family: 'Noto Serif TC', serif; font-size: .98rem; font-weight: 700; margin-bottom: .3rem; }
+    .dest-card p { font-size: .78rem; color: #7a8c7d; line-height: 1.6; margin-bottom: .75rem; }
+    .dest-meta { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .meta-tag { font-size: .68rem; font-weight: 600; padding: .2rem .6rem; border-radius: 3px; }
+    .meta-price { background: #e8f4ea; color: var(--green); }
+    .meta-days  { background: #fef6e4; color: #9a7b2a; }
+    .meta-depart{ background: #f0e8ff; color: #6b46a0; }
+
+    /* ── TOUR TYPES ── */
+    #tours { background: var(--dark); color: var(--cream); }
+    #tours .section-title { color: #fff; }
+    #tours .section-desc  { color: #8ab09a; }
+    #tours .section-label { color: var(--lime); }
+    .tour-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .tour-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(116,198,157,.15);
+      border-radius: 8px; padding: 1.75rem 1.5rem;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+    .tour-card:hover { background: rgba(116,198,157,.09); border-color: var(--lime); transform: translateY(-3px); }
+    .tour-icon { font-size: 2.2rem; margin-bottom: .85rem; }
+    .tour-card h3 { font-family: 'Noto Serif TC', serif; color: var(--lime); font-size: 1rem; font-weight: 700; margin-bottom: .5rem; }
+    .tour-card p { font-size: .8rem; color: #7a9a80; line-height: 1.7; }
+
+    /* ── TRAFFIC ── */
+    #traffic { background: var(--warm); }
+    .traffic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .traffic-item {
+      background: #fff; border-radius: 8px; padding: 1.5rem 1.25rem;
+      border: 1px solid #dce8d8;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .traffic-item:hover { border-color: var(--lime); box-shadow: 0 6px 20px var(--shadow); transform: translateY(-3px); }
+    .traffic-icon { font-size: 2rem; margin-bottom: .75rem; }
+    .traffic-item h3 { font-family: 'Noto Serif TC', serif; font-size: .95rem; color: var(--green); font-weight: 700; margin-bottom: .4rem; }
+    .traffic-item p { font-size: .8rem; color: #6e7e6f; line-height: 1.7; }
+
+    /* ── FEATURE ── */
+    #feature { background: var(--cream); }
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .feature-item {
+      padding: 1.75rem 1.5rem; border-radius: 8px;
+      background: #fff; border-left: 4px solid var(--lime);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .feature-item:hover { box-shadow: 0 6px 20px var(--shadow); transform: translateY(-3px); }
+    .feature-icon { font-size: 1.8rem; margin-bottom: .75rem; }
+    .feature-item h3 { font-size: .95rem; font-weight: 700; color: var(--green); margin-bottom: .4rem; }
+    .feature-item p { font-size: .8rem; color: #6a7a6b; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--dark); }
+    #contact .section-title { color: #fff; }
+    #contact .section-desc  { color: #8ab09a; }
+    #contact .section-label { color: var(--lime); }
+    #contact .divider        { background: var(--lime); }
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2.5rem; }
+    .contact-info-box { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(116,198,157,.14);
+      border-radius: 8px; padding: 1.25rem;
+      transition: border-color .2s, background .2s;
+    }
+    .contact-row:hover { border-color: var(--lime); background: rgba(116,198,157,.06); }
+    .contact-ico { font-size: 1.4rem; flex-shrink: 0; }
+    .contact-text h4 { font-size: .82rem; font-weight: 700; color: var(--lime); letter-spacing: .06em; margin-bottom: .3rem; }
+    .contact-text p, .contact-text a { font-size: .82rem; color: #8ab09a; line-height: 1.6; text-decoration: none; }
+    .contact-form-box { background: rgba(255,255,255,.04); border: 1px solid rgba(116,198,157,.14); border-radius: 8px; padding: 2rem; }
+    .contact-form-box h3 { font-family: 'Noto Serif TC', serif; color: #fff; font-size: 1rem; margin-bottom: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+    .form-group label { font-size: .75rem; color: var(--lime); font-weight: 600; }
+    .form-group input, .form-group textarea, .form-group select {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(116,198,157,.2);
+      color: #c8daca; font-family: 'Noto Sans TC', sans-serif; font-size: .82rem;
+      padding: .65rem .9rem; border-radius: 4px; outline: none;
+    }
+    .btn-submit {
+      width: 100%; background: var(--lime); color: var(--dark);
+      font-weight: 700; font-size: .85rem; padding: .8rem;
+      border: none; border-radius: 4px; cursor: pointer; transition: transform .2s;
+    }
+
+    /* ── FOOTER ── */
+    footer { background: #0a1a0e; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; }
+    .footer-logo { font-family: 'Noto Serif TC', serif; font-weight: 900; font-size: 1.4rem; color: var(--lime); margin-bottom: .7rem; }
+    .footer-tagline { font-size: .8rem; color: #4a6a50; line-height: 1.8; }
+    .footer-col h4 { font-family: 'Noto Serif TC', serif; color: var(--lime); font-size: .82rem; margin-bottom: .9rem; border-bottom: 1px solid rgba(116,198,157,.15); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-col ul li, .footer-col ul button { font-size: .78rem; color: #4a6a50; background: none; border: none; cursor: pointer; text-align: left; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.05); text-align: center; padding: 1.5rem 2rem; font-size: .72rem; color: #3a5040; }
+
+    #backTop {
+      position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 300;
+      background: var(--green); color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px;
+      cursor: pointer; opacity: 0; transition: opacity .3s, transform .3s;
+    }
+    #backTop.visible { opacity: 1; }
+
+    @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr 1fr; } .contact-wrap { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
-
 <header>
-  <div class="site-logo">東海商圈</div>
+  <div class="logo"><span class="logo-leaf">🌿</span>蔬式旅行</div>
   <nav>
     <button onclick="goTo('hero')">頁首</button>
-    <button onclick="goTo('food')">必吃美食</button>
+    <button onclick="goTo('destinations')">必吃美食</button>
+    <button onclick="goTo('tours')">旅遊行程</button>
     <button onclick="goTo('traffic')">交通資訊</button>
     <button onclick="goTo('contact')">聯絡我們</button>
   </nav>
 </header>
 
-<!-- ══ HERO ══ -->
-
 <section id="hero">
-  <div class="hero-badge">Taichung · Donghai District</div>
-  <h1>台中<span>東海商圈</span><br>美食導覽</h1>
-  <p class="hero-sub">探索台中最具人氣的學區商圈，從傳統小吃到文青咖啡，每一口都是東海獨特的味道。</p>
-  <button class="hero-cta" onclick="goTo('food')">探索美食 →</button>
+  <span class="hero-badge">🌱 Vegan · Sustainable · Travel</span>
+  <h1>探索世界<br><em>蔬食的美好旅程</em></h1>
+  <p class="hero-sub">以植物為食，以大地為伴。帶您發現每一處蔬食天堂。</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="goTo('destinations')">探索行程 →</button>
+    <button class="btn-outline" onclick="goTo('tours')">了解特色</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">蔬食餐廳</div></div>
+    <div class="stat"><div class="stat-num">12</div><div class="stat-label">旅遊目的地</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">純蔬食行程</div></div>
+  </div>
 </section>
-
-<!-- ══ NEWS ══ -->
 
 <section id="news">
   <div class="section-inner">
     <p class="section-label">Latest News</p>
     <h2 class="section-title">最新消息</h2>
     <div class="divider"></div>
-    <p class="section-desc">掌握東海商圈的最新活動與店家資訊，讓您的每次造訪都充滿驚喜。</p>
-
-```
-<div class="news-grid">
-  <article class="news-card">
-    <div class="news-thumb t1">🎉</div>
-    <div class="news-body">
-      <p class="news-date">2026 / 04 / 10</p>
-      <h3>東海夜市美食節即將登場</h3>
-      <p>本月底將舉辦年度美食節，超過 50 家攤販齊聚，邀請民眾一同品嚐道地風味，活動免費入場。</p>
+    <div class="news-grid">
+      <article class="news-card">
+        <div class="news-thumb n1">🌸</div>
+        <div class="news-body">
+          <p class="news-date">2026 / 04 / 10</p>
+          <h3>2026 日本蔬食春季限定行程開放預訂</h3>
+          <p>特別規劃全蔬食懷石料理體驗，名額有限。</p>
+        </div>
+      </article>
+      <article class="news-card">
+        <div class="news-thumb n2">🥗</div>
+        <div class="news-body">
+          <p class="news-date">2026 / 03 / 25</p>
+          <h3>東南亞蔬食秘境新路線上架</h3>
+          <p>全新泰國清邁＋越南峴港雙城蔬食旅遊路線。</p>
+        </div>
+      </article>
     </div>
-  </article>
-  <article class="news-card">
-    <div class="news-thumb t2">🏪</div>
-    <div class="news-body">
-      <p class="news-date">2026 / 03 / 28</p>
-      <h3>新店家進駐！日式拉麵館正式開幕</h3>
-      <p>人氣日式拉麵品牌正式落腳東海商圈，開幕首週享八折優惠，歡迎饕客前往品嚐道地湯頭。</p>
-    </div>
-  </article>
-</div>
-```
-
   </div>
 </section>
 
-<!-- ══ FOOD ══ -->
-
-<section id="food">
+<section id="destinations">
   <div class="section-inner">
     <p class="section-label">Must Try</p>
-    <h2 class="section-title">必吃美食</h2>
+    <h2 class="section-title">必吃美食 · 推薦行程</h2>
     <div class="divider"></div>
-    <p class="section-desc">東海商圈匯聚各式風味料理，以下精選推薦店家，帶您一網打盡在地人氣美食。</p>
+    
+    <div class="dest-tabs">
+      <button class="tab-btn active" onclick="filterDest('全部')">全部</button>
+      <button class="tab-btn" onclick="filterDest('東南亞')">東南亞</button>
+      <button class="tab-btn" onclick="filterDest('韓國')">韓國</button>
+      <button class="tab-btn" onclick="filterDest('日本')">日本</button>
+      <button class="tab-btn" onclick="filterDest('台中出發')">台中出發</button>
+      <button class="tab-btn" onclick="filterDest('高雄出發')">高雄出發</button>
+    </div>
 
-```
-<div class="food-grid">
-  <div class="food-card">
-    <div class="food-icon">🧆</div>
-    <h3>東海炸雞排</h3>
-    <p>酥脆外皮、多汁肉質，是東海商圈最具代表性的街頭小吃。</p>
-    <span class="food-tag">人氣 No.1</span>
-  </div>
-  <div class="food-card">
-    <div class="food-icon">🍜</div>
-    <h3>在地牛肉麵</h3>
-    <p>以台灣本土牛熬製的濃醇湯底，搭配手工麵條，暖心又暖胃。</p>
-    <span class="food-tag">必吃推薦</span>
-  </div>
-  <div class="food-card">
-    <div class="food-icon">🧋</div>
-    <h3>珍珠奶茶</h3>
-    <p>東海商圈的發源地之一，喝一杯最正宗的泡泡奶茶，感受台灣茶飲文化。</p>
-    <span class="food-tag">發源地</span>
-  </div>
-  <div class="food-card">
-    <div class="food-icon">☕</div>
-    <h3>文青咖啡廳</h3>
-    <p>多間獨立咖啡館，提供精品單品豆與手沖服務，適合靜靜享受午後時光。</p>
-    <span class="food-tag">打卡熱點</span>
-  </div>
-  <div class="food-card">
-    <div class="food-icon">🍱</div>
-    <h3>便當專賣店</h3>
-    <p>物美價廉的台式便當，各式滷肉、排骨、雞腿任選，是學生族的日常首選。</p>
-    <span class="food-tag">CP值超高</span>
-  </div>
-  <div class="food-card">
-    <div class="food-icon">🍡</div>
-    <h3>傳統甜品</h3>
-    <p>紅豆湯圓、仙草凍、芋圓等古早味甜品，每一口都是兒時的甜蜜記憶。</p>
-    <span class="food-tag">古早味</span>
-  </div>
-</div>
-```
-
+    <div class="dest-grid">
+      <div class="dest-card" data-category="東南亞 台中出發">
+        <div class="dest-img sea"><span>🌴</span><span class="dest-region">東南亞</span></div>
+        <div class="dest-body">
+          <h3>泰國清邁蔬食秘境</h3>
+          <p>深入清邁有機農場，體驗地道泰式蔬食。</p>
+          <div class="dest-meta">
+            <span class="meta-tag meta-price">NT$38,000</span>
+            <span class="meta-tag meta-depart">台中出發</span>
+          </div>
+        </div>
+      </div>
+      <div class="dest-card" data-category="韓國 高雄出發">
+        <div class="dest-img kr"><span>🌸</span><span class="dest-region">韓國</span></div>
+        <div class="dest-body">
+          <h3>首爾韓式寺院料理</h3>
+          <p>探訪知名寺院，品嚐百年傳承蔬食。</p>
+          <div class="dest-meta">
+            <span class="meta-tag meta-price">NT$42,000</span>
+            <span class="meta-tag meta-depart">高雄出發</span>
+          </div>
+        </div>
+      </div>
+      <div class="dest-card" data-category="日本 台中出發">
+        <div class="dest-img jp"><span>⛩️</span><span class="dest-region">日本</span></div>
+        <div class="dest-body">
+          <h3>京都精進料理之旅</h3>
+          <p>造訪京都百年老店，感受精進料理之美。</p>
+          <div class="dest-meta">
+            <span class="meta-tag meta-price">NT$55,000</span>
+            <span class="meta-tag meta-depart">台中出發</span>
+          </div>
+        </div>
+      </div>
+      <div class="dest-card" data-category="東南亞 高雄出發">
+        <div class="dest-img sea"><span>🏝️</span><span class="dest-region">東南亞</span></div>
+        <div class="dest-body">
+          <h3>巴厘島綠色靜修</h3>
+          <p>每日瑜珈課程搭配新鮮蔬食，身心淨化。</p>
+          <div class="dest-meta">
+            <span class="meta-tag meta-price">NT$48,000</span>
+            <span class="meta-tag meta-depart">高雄出發</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ══ TRAFFIC ══ -->
+<section id="tours">
+  <div class="section-inner">
+    <p class="section-label">Tour Features</p>
+    <h2 class="section-title">蔬食旅遊特色</h2>
+    <div class="divider"></div>
+    <div class="tour-grid">
+      <div class="tour-card"><div class="tour-icon">✈️</div><h3>海外蔬食旅遊</h3><p>精選東南亞、韓國、日本蔬食餐廳。</p></div>
+      <div class="tour-card"><div class="tour-icon">🌾</div><h3>國內綠色旅遊</h3><p>深入台灣在地有機農場與蔬食聚落。</p></div>
+      <div class="tour-card"><div class="tour-icon">🍽️</div><h3>美食深度體驗</h3><p>安排道地蔬食料理課程。</p></div>
+      <div class="tour-card"><div class="tour-icon">🌍</div><h3>永續旅遊理念</h3><p>支持在地有機農業，友善地球。</p></div>
+    </div>
+  </div>
+</section>
 
 <section id="traffic">
   <div class="section-inner">
-    <p class="section-label" style="color:var(--gold)">How to Get Here</p>
+    <p class="section-label">Transportation</p>
     <h2 class="section-title">交通資訊</h2>
     <div class="divider"></div>
-    <p class="section-desc">無論您從台中哪個方向出發，都能輕鬆抵達東海商圈。</p>
-
-```
-<div class="traffic-grid">
-  <div class="traffic-item">
-    <div class="traffic-icon">🚗</div>
-    <h3>自行開車</h3>
-    <p>由國道一號中港交流道下，往沙鹿方向行駛，約 15 分鐘可抵達東海大學周邊商圈。</p>
-  </div>
-  <div class="traffic-item">
-    <div class="traffic-icon">🚌</div>
-    <h3>公車</h3>
-    <p>搭乘台中市公車 70、106、107 號，至「東海大學」站下車，步行 3 分鐘即達商圈核心。</p>
-  </div>
-  <div class="traffic-item">
-    <div class="traffic-icon">🛵</div>
-    <h3>機車 / 腳踏車</h3>
-    <p>商圈設有機車停車格及 YouBike 站點，騎乘輕巧，穿梭巷弄更添樂趣。</p>
-  </div>
-  <div class="traffic-item">
-    <div class="traffic-icon">📍</div>
-    <h3>地址參考</h3>
-    <p>台灣台中市龍井區東海路一帶（東海大學正門周邊商圈）。</p>
-  </div>
-</div>
-```
-
+    <div class="traffic-grid">
+      <div class="traffic-item"><h3>台中出發</h3><p>集合地點：台中清泉崗機場。</p></div>
+      <div class="traffic-item"><h3>高雄出發</h3><p>集合地點：高雄國際機場。</p></div>
+      <div class="traffic-item"><h3>接駁服務</h3><p>提供市區定點免費接駁，搭乘方便。</p></div>
+    </div>
   </div>
 </section>
-
-<!-- ══ CONTACT ══ -->
 
 <section id="contact">
   <div class="section-inner">
     <p class="section-label">Get in Touch</p>
     <h2 class="section-title">聯絡我們</h2>
     <div class="divider"></div>
-    <p class="section-desc">如有任何問題或合作洽詢，歡迎透過以下方式與我們聯繫。</p>
-
-```
-<div class="contact-box">
-  <div class="contact-row">
-    <span class="contact-ico">📧</span>
-    <div class="contact-info">
-      <h4>Email</h4>
-      <a href="mailto:info@donghai-food.tw">info@donghai-food.tw</a>
+    <div class="contact-wrap">
+      <div class="contact-info-box">
+        <div class="contact-row"><span class="contact-ico">📧</span><div class="contact-text"><h4>Email</h4><p>hello@veggie-journey.tw</p></div></div>
+        <div class="contact-row"><span class="contact-ico">📞</span><div class="contact-text"><h4>電話</h4><p>(04) 2345-6789</p></div></div>
+      </div>
+      <div class="contact-form-box">
+        <h3>📩 快速詢問表單</h3>
+        <div class="form-group"><label>您的姓名</label><input type="text" placeholder="請輸入姓名"/></div>
+        <div class="form-group"><label>感興趣的行程</label><select><option>東南亞</option><option>韓國</option><option>日本</option></select></div>
+        <button class="btn-submit">送出詢問 →</button>
+      </div>
     </div>
-  </div>
-  <div class="contact-row">
-    <span class="contact-ico">📞</span>
-    <div class="contact-info">
-      <h4>電話</h4>
-      <p>(04) 2631-XXXX</p>
-    </div>
-  </div>
-  <div class="contact-row">
-    <span class="contact-ico">🕐</span>
-    <div class="contact-info">
-      <h4>服務時間</h4>
-      <p>週一至週五　10:00 – 18:00<br>國定假日休息</p>
-    </div>
-  </div>
-  <div class="contact-row">
-    <span class="contact-ico">📍</span>
-    <div class="contact-info">
-      <h4>地址</h4>
-      <p>台中市龍井區東海路 × 藝術街</p>
-    </div>
-  </div>
-</div>
-```
-
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
-
-<footer id="footer">
+<footer>
   <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="footer-logo">東海商圈</div>
-      <p class="footer-tagline">台中最具溫度的學區商圈<br>美食、文化、生活的交匯之地</p>
-      <div class="footer-socials">
-        <a href="#" title="Facebook">📘</a>
-        <a href="#" title="Instagram">📸</a>
-        <a href="#" title="Line">💬</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>快速連結</h4>
-      <ul>
-        <li><button onclick="goTo('hero')">頁首</button></li>
-        <li><button onclick="goTo('news')">最新消息</button></li>
-        <li><button onclick="goTo('food')">必吃美食</button></li>
-        <li><button onclick="goTo('traffic')">交通資訊</button></li>
-        <li><button onclick="goTo('contact')">聯絡我們</button></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>聯絡資訊</h4>
-      <ul>
-        <li>📍 台中市龍井區東海路 × 藝術街</li>
-        <li>📞 (04) 2631-XXXX</li>
-        <li>📧 info@donghai-food.tw</li>
-        <li>🕐 週一至週五 10:00 – 18:00</li>
-      </ul>
-    </div>
+    <div class="footer-brand"><div class="footer-logo">🌿 蔬式旅行</div><p class="footer-tagline">以植物為食，以大地為伴。</p></div>
+    <div class="footer-col"><h4>快速連結</h4><ul><li><button onclick="goTo('hero')">頁首</button></li><li><button onclick="goTo('destinations')">必吃美食</button></li></ul></div>
   </div>
-  <div class="footer-bottom">
-    <p>&copy;2026 <span>台中東海商圈美食導覽</span>．All rights reserved．</p>
-    <p class="footer-sub">本網站內容僅供參考，實際資訊請以各店家公告為準</p>
-  </div>
+  <div class="footer-bottom"><p>&copy;2026 蔬式旅行．All rights reserved．</p></div>
 </footer>
 
-<!-- ══ BACK TO TOP ══ -->
-
-<button id="backTop" title="回到頂部" onclick="goTo('hero')">↑</button>
+<button id="backTop" onclick="goTo('hero')">↑</button>
 
 <script>
   function goTo(id) {
@@ -715,9 +478,30 @@ footer {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  const btn = document.getElementById('backTop');
+  // 核心篩選功能
+  function filterDest(category) {
+    // 1. 更新按鈕樣式 (視覺回饋)
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    // 這裡我們抓取被點擊的那個按鈕
+    event.target.classList.add('active');
+
+    // 2. 執行卡片篩選
+    const cards = document.querySelectorAll('.dest-card');
+    cards.forEach(card => {
+      const cardCategories = card.getAttribute('data-category');
+      if (category === '全部' || cardCategories.includes(category)) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+
+  // 回到頂部按鈕
+  const topBtn = document.getElementById('backTop');
   window.addEventListener('scroll', () => {
-    btn.classList.toggle('visible', window.scrollY > 400);
+    if (window.scrollY > 400) { topBtn.classList.add('visible'); } 
+    else { topBtn.classList.remove('visible'); }
   });
 </script>
 
